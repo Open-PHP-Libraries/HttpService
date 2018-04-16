@@ -5,10 +5,10 @@ namespace OpenPHPLibraries\Http\Types;
 
 abstract class AuthorizationType
 {
-    const Basic = 'Basic';
-    const Bearer = 'Bearer';
-    const Digest = 'Digest';
+    const BASIC = 'Basic';
+    const BEARER = 'Bearer';
+    const DIGEST = 'Digest';
     const HMAC = 'HMAC';
-    const None = '';
+    const NONE = '';
 
 }

@@ -1,0 +1,29 @@
+{
+  "name": "open-php-libraries/http-service",
+  "description": "",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Open-PHP-Libraries/HttpService",
+  "license": "MIT",
+  "keywords": [
+    "HTTP",
+    "REST",
+    "API",
+    "CLIENT",
+    "PHP7",
+    "FAST"
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "OpenPHPLibraries\\Http\\": "lib/",
+      "OpenPHPLibraries\\Http\\Encoder\\": "lib/Encoders",
+      "OpenPHPLibraries\\Http\\Decoder\\": "lib/Decoders",
+      "OpenPHPLibraries\\Http\\Types\\": "lib/Types"
+    }
+  }
+}
+
+

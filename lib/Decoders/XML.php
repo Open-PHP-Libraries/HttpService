@@ -7,7 +7,7 @@ use stdClass;
 class XML extends Decoder
 {
     /**
-     * @var string $result
+     * @var string
      */
     private $result;
 
@@ -22,33 +22,35 @@ class XML extends Decoder
     }
 
     /**
-     * Returns the XML as an stdClass
+     * Returns the XML as an stdClass.
      *
      * @return stdClass
      */
     public function asObject(): stdClass
     {
         $xml = simplexml_load_string($this->result);
-        $array = json_decode(json_encode((array)$xml));
+        $array = json_decode(json_encode((array) $xml));
         $array = [$xml->getName() => $array];
+
         return $array;
     }
 
     /**
-     * Returns the XML as an array
+     * Returns the XML as an array.
      *
      * @return array
      */
     public function asArray(): array
     {
         $xml = simplexml_load_string($this->result);
-        $array = json_decode(json_encode((array)$xml), true);
+        $array = json_decode(json_encode((array) $xml), true);
         $array = [$xml->getName() => $array];
+
         return $array;
     }
 
     /**
-     * Returns the XML as a string
+     * Returns the XML as a string.
      *
      * @return string
      */

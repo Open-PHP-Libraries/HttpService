@@ -2,61 +2,69 @@
 
 namespace OpenPHPLibraries\Http;
 
-
 use OpenPHPLibraries\Http\Encoders\Encoder;
 use OpenPHPLibraries\Http\Types\ContentType;
 
 /**
- * Class CURL
+ * Class CURL.
  *
  * @version 1.0.0
- * @package OpenPHPLibraries\Http
  */
 class CURL
 {
     /**
-     * @var string $baseURL The base URL used for all requests
+     * @var string The base URL used for all requests
      * @var string $endpoint The endpoint of the URL
-     * @var array $headers The headers for the request
-     * @var array $responseHeaders The headers from the last sent request
-     * @var array $verifySSL Whether or not to verify the SSL certificate
+     * @var array  $headers The headers for the request
+     * @var array  $responseHeaders The headers from the last sent request
+     * @var array  $verifySSL Whether or not to verify the SSL certificate
      * @var string $forcedResponseType If the HTTP Resource does not properly send the Content-Type you can set it here
-     * @var int $requestTimeout Amount of seconds we should wait for the request to complete
-     * @var int $connectTimeout Amount of seconds we should wait for the connection to be established
+     * @var int    $requestTimeout Amount of seconds we should wait for the request to complete
+     * @var int    $connectTimeout Amount of seconds we should wait for the connection to be established
      */
-    public $baseURL = '', $endpoint = '', $headers = [], $responseHeaders = [], $verifySSL = true, $forcedResponseType = '', $requestTimeout = 0, $connectTimeout = 0;
+    public $baseURL = '';
+    public $endpoint = '';
+    public $headers = [];
+    public $responseHeaders = [];
+    public $verifySSL = true;
+    public $forcedResponseType = '';
+    public $requestTimeout = 0;
+    public $connectTimeout = 0;
 
     /**
-     * @var resource $curl ;
+     * @var resource ;
      */
     private $curl;
 
     /**
-     * Returns whether or not the CURL function has been installed on the current PHP version
+     * Returns whether or not the CURL function has been installed on the current PHP version.
      *
      * @return bool
+     *
      * @since 1.0.0
      */
     public function enabled(): bool
     {
-        if (in_array('curl', get_loaded_extensions()))
+        if (in_array('curl', get_loaded_extensions())) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     /**
-     * Initiate the CURL object if it doesn't exist and set settings setup
+     * Initiate the CURL object if it doesn't exist and set settings setup.
      *
      * @return CURL
+     *
      * @since 1.0.0
      */
-    public function initiate(): CURL
+    public function initiate(): self
     {
         if ($this->curl === null) {
             $this->curl = curl_init();
             curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, __NAMESPACE__ . "\CURL::handleHeaders");
+            curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, __NAMESPACE__."\CURL::handleHeaders");
         }
 
         /* Set SSL verify */
@@ -76,15 +84,16 @@ class CURL
         curl_setopt($this->curl, CURLOPT_TIMEOUT, $this->requestTimeout);
 
         return $this;
-
     }
 
     /**
-     * This function handles all incoming headers from the request
+     * This function handles all incoming headers from the request.
      *
      * @param $curl
      * @param $header
+     *
      * @return int
+     *
      * @since 1.0.0
      */
     public function handleHeaders($curl, $header)
@@ -92,19 +101,22 @@ class CURL
         $cutHeader = trim(preg_replace('/\s\s+/', ' ', $header));
         $splitHeader = explode(':', $cutHeader, 2);
 
-        if (sizeof($splitHeader) === 1 && strlen($splitHeader[0]) != 0)
+        if (count($splitHeader) === 1 && strlen($splitHeader[0]) != 0) {
             $this->responseHeaders[] = $splitHeader[0];
-        else if (sizeof($splitHeader) > 1)
+        } elseif (count($splitHeader) > 1) {
             $this->responseHeaders[$splitHeader[0]] = ltrim($splitHeader[1]);
+        }
 
         return strlen($header);
     }
 
     /**
-     * Get info from the CURL request
+     * Get info from the CURL request.
      *
      * @param int $info
+     *
      * @return mixed
+     *
      * @since 1.0.0
      */
     public function getInfo(int $info)
@@ -113,57 +125,68 @@ class CURL
     }
 
     /**
-     * Set an option for the CURL request
+     * Set an option for the CURL request.
      *
      * @param int $option
      * @param $value
+     *
      * @return CURL
+     *
      * @since 1.0.0
      */
-    public function setOption(int $option, $value): CURL
+    public function setOption(int $option, $value): self
     {
         curl_setopt($this->curl, $option, $value);
+
         return $this;
     }
 
     /**
-     * Sets the URL for the request
+     * Sets the URL for the request.
      *
      * @param string $url
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return CURL
+     *
      * @since 1.0.0
      */
-    public function setUrl(string $url, array $parameters): CURL
+    public function setUrl(string $url, array $parameters): self
     {
         curl_setopt($this->curl, CURLOPT_URL, $this->buildUrl($url, $parameters));
+
         return $this;
     }
 
     /**
      * Set the request type for the request has to be one of the following:
-     * GET, POST, PATCH, PUT or DELETE
+     * GET, POST, PATCH, PUT or DELETE.
      *
      * @param string $requestMethod
+     *
      * @return CURL
+     *
      * @since 1.0.0
      */
-    public function setRequestMethod(string $requestMethod): CURL
+    public function setRequestMethod(string $requestMethod): self
     {
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, $requestMethod);
+
         return $this;
     }
 
     /**
      * Set the POST data for the request, will only work if you send one of the following requests:
-     * POST, PATCH or PUT
+     * POST, PATCH or PUT.
      *
      * @param string $contentType
-     * @param array $data
+     * @param array  $data
+     *
      * @return CURL
+     *
      * @since  1.0.0
      */
-    public function setPostData(string $contentType, array $data): CURL
+    public function setPostData(string $contentType, array $data): self
     {
         $encoder = new Encoder($data);
 
@@ -194,7 +217,7 @@ class CURL
     }
 
     /**
-     * Destroy the CURL object
+     * Destroy the CURL object.
      *
      * @since 1.0.0
      */
@@ -204,24 +227,27 @@ class CURL
     }
 
     /**
-     * Execute the CURL request
+     * Execute the CURL request.
      *
      * @return mixed
+     *
      * @since 1.0.0
      */
     public function execute()
     {
         $this->responseHeaders = [];
+
         return curl_exec($this->curl);
     }
 
     /**
-     * Reset the CURL object
+     * Reset the CURL object.
      *
      * @return CURL
+     *
      * @since 1.0.0
      */
-    public function reset(): CURL
+    public function reset(): self
     {
         if ($this->curl !== null) {
             curl_reset($this->curl);
@@ -240,13 +266,16 @@ class CURL
      * Builds the URL including all GET parameters.
      *
      * @param string $url
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return string
+     *
      * @since 1.0.0
      */
     private function buildUrl(string $url, array $parameters): string
     {
         $query = http_build_query($parameters);
-        return sizeof($parameters) === 0 ? "{$this->baseURL}{$this->endpoint}{$url}" : "{$this->baseURL}{$this->endpoint}{$url}?{$query}";
+
+        return count($parameters) === 0 ? "{$this->baseURL}{$this->endpoint}{$url}" : "{$this->baseURL}{$this->endpoint}{$url}?{$query}";
     }
 }

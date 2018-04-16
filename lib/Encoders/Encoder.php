@@ -2,7 +2,6 @@
 
 namespace OpenPHPLibraries\Http\Encoders;
 
-
 use SimpleXMLElement;
 
 class Encoder
@@ -28,7 +27,7 @@ class Encoder
     {
         $xml = new SimpleXMLElement('<root/>');
         array_walk_recursive($this->data, [$xml, 'addChild']);
+
         return $xml->asXML();
     }
-
 }

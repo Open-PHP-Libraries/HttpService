@@ -2,7 +2,6 @@
 
 namespace OpenPHPLibraries\Http\Types;
 
-
 abstract class AuthorizationType
 {
     const BASIC = 'Basic';
@@ -10,5 +9,4 @@ abstract class AuthorizationType
     const DIGEST = 'Digest';
     const HMAC = 'HMAC';
     const NONE = '';
-
 }

@@ -2,7 +2,6 @@
 
 namespace OpenPHPLibraries\Http\Types;
 
-
 abstract class ContentType
 {
     const JSON = 'application/json';
@@ -11,5 +10,4 @@ abstract class ContentType
     const HTML = 'text/html';
     const FORM_ENCODED = 'application/x-www-form-urlencoded';
     const TEXT = 'text/plain';
-
 }

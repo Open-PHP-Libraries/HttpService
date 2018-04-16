@@ -7,7 +7,7 @@ use stdClass;
 class JSON extends Decoder
 {
     /**
-     * @var string $result
+     * @var string
      */
     private $result;
 
@@ -22,7 +22,7 @@ class JSON extends Decoder
     }
 
     /**
-     * Returns the JSON as an stdClass
+     * Returns the JSON as an stdClass.
      *
      * @return stdClass
      */
@@ -32,7 +32,7 @@ class JSON extends Decoder
     }
 
     /**
-     * Returns the JSON as an array
+     * Returns the JSON as an array.
      *
      * @return array
      */
@@ -42,7 +42,7 @@ class JSON extends Decoder
     }
 
     /**
-     * Returns the JSON as a string
+     * Returns the JSON as a string.
      *
      * @return string
      */

@@ -2,7 +2,6 @@
 
 namespace OpenPHPLibraries\Http\Decoder;
 
-
 use stdClass;
 
 abstract class Decoder

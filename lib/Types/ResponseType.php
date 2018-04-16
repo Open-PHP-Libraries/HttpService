@@ -2,7 +2,6 @@
 
 namespace OpenPHPLibraries\Http\Types;
 
-
 abstract class ResponseType
 {
     const JSON = 'application/json';

@@ -3,20 +3,18 @@
  * Created by IntelliJ IDEA.
  * User: marti
  * Date: 15-4-2018
- * Time: 21:34
+ * Time: 21:34.
  */
 
 namespace OpenPHPLibraries\Http\Decoder;
-
 
 use Error;
 use stdClass;
 
 class Text extends Decoder
 {
-
     /**
-     * @var string $result
+     * @var string
      */
     private $result;
 
@@ -31,7 +29,7 @@ class Text extends Decoder
     }
 
     /**
-     * Throws an error
+     * Throws an error.
      *
      * @throws Error
      */
@@ -41,7 +39,7 @@ class Text extends Decoder
     }
 
     /**
-     * Throws an error
+     * Throws an error.
      *
      * @throws Error
      */
@@ -51,7 +49,7 @@ class Text extends Decoder
     }
 
     /**
-     * Returns text
+     * Returns text.
      *
      * @return string
      */

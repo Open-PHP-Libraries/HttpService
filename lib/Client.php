@@ -2,42 +2,40 @@
 
 namespace OpenPHPLibraries\Http;
 
-
 use Error;
 use OpenPHPLibraries\Http\Types\AuthorizationType;
 use OpenPHPLibraries\Http\Types\ContentType;
 use OpenPHPLibraries\Http\Types\RequestMethod;
 
 /**
- * Client class, base class for everything
+ * Client class, base class for everything.
  *
  * @version 1.0.0
- * @package OpenPHPLibraries\Http
+ *
  * @author Open PHP Libraries
  */
 class Client
 {
     /**
-     * @var CURL $curl
+     * @var CURL
      */
     private $curl;
 
     /**
-     * Creates a new instance of the client class
+     * Creates a new instance of the client class.
      *
      * @param string $baseURL
      * @param string $endpoint
-     * @param array $headers
-     * @param bool $verifySSL
+     * @param array  $headers
+     * @param bool   $verifySSL
      */
     public function __construct(string $baseURL = '', string $endpoint = '', array $headers = [], bool $verifySSL = true)
     {
         $this->curl = new CURL();
 
-        if (!$this->curl->enabled())
+        if (!$this->curl->enabled()) {
             throw new Error('CURL is not installed!');
-
-
+        }
         $this->curl->baseURL = $baseURL;
         $this->curl->endpoint = $endpoint;
         $this->curl->headers = $headers;
@@ -48,25 +46,31 @@ class Client
      * Set the base URL of the service, this will be appended to all requests.
      *
      * @param string $url The base URL of the API you want to sent requests to
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setBaseURL(string $url): Client
+    public function setBaseURL(string $url): self
     {
         $this->curl->baseURL = $url;
+
         return $this;
     }
 
     /**
-     * Sets the endpoint of the API
+     * Sets the endpoint of the API.
      *
      * @param string $endpoint The endpoint of the API
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setEndpoint(string $endpoint): Client
+    public function setEndpoint(string $endpoint): self
     {
         $this->curl->endpoint = $endpoint;
+
         return $this;
     }
 
@@ -75,87 +79,107 @@ class Client
      * DO NOT USE FOR PRODUCTION!
      *
      * @param bool $verify
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setVerifySSL(bool $verify): Client
+    public function setVerifySSL(bool $verify): self
     {
         $this->curl->verifySSL = $verify;
+
         return $this;
     }
 
     /**
-     * Set the authorization header type
+     * Set the authorization header type.
      *
      * @param string $type
      * @param string $key
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setAuthorization(string $type, string $key): Client
+    public function setAuthorization(string $type, string $key): self
     {
-        $this->curl->headers['Authorization'] = ($type == AuthorizationType::None ? '' : $type . ' ') . "{$key}";
+        $this->curl->headers['Authorization'] = ($type == AuthorizationType::None ? '' : $type.' ')."{$key}";
+
         return $this;
     }
 
     /**
-     * Set the response type if the server doesn't do this manually already
+     * Set the response type if the server doesn't do this manually already.
      *
      * @param string $type
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setResponseType(string $type): Client
+    public function setResponseType(string $type): self
     {
         $this->curl->forcedResponseType = $type;
+
         return $this;
     }
 
     /**
-     * Amount of seconds to wait for the request to complete
+     * Amount of seconds to wait for the request to complete.
      *
      * @param int $timeout
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setRequestTimeout(int $timeout): Client
+    public function setRequestTimeout(int $timeout): self
     {
         $this->curl->requestTimeout = $timeout;
+
         return $this;
     }
 
     /**
-     * Amount of seconds to wait for a connection to the server
+     * Amount of seconds to wait for a connection to the server.
      *
      * @param int $timeout
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function setConnectTimeout(int $timeout): Client
+    public function setConnectTimeout(int $timeout): self
     {
         $this->curl->connectTimeout = $timeout;
+
         return $this;
     }
 
     /**
-     * Add a new header to the request
+     * Add a new header to the request.
      *
      * @param string $name
      * @param string $value
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function addHeader(string $name, string $value): Client
+    public function addHeader(string $name, string $value): self
     {
         $this->curl->headers[$name] = $value;
+
         return $this;
     }
 
     /**
-     * Get the value of a header
+     * Get the value of a header.
      *
      * @param string $name
+     *
      * @return string
+     *
      * @since 1.0.0
      */
     public function getHeader(string $name): string
@@ -164,25 +188,29 @@ class Client
     }
 
     /**
-     * Delete a header rom the request
+     * Delete a header rom the request.
      *
      * @param string $name
+     *
      * @return Client
+     *
      * @since 1.0.0
      */
-    public function deleteHeader(string $name): Client
+    public function deleteHeader(string $name): self
     {
         unset($this->curl->headers[$name]);
+
         return $this;
     }
 
-
     /**
-     * Send a GET request
+     * Send a GET request.
      *
      * @param string $url
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return Response
+     *
      * @since 1.0.0
      */
     public function get(string $url, array $parameters = []): Response
@@ -202,12 +230,13 @@ class Client
     }
 
     /**
-     * Send a POST request
+     * Send a POST request.
      *
      * @param string $url
-     * @param array $body
+     * @param array  $body
      * @param string $contentType
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return Response
      */
     public function post(string $url, array $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
@@ -228,12 +257,13 @@ class Client
     }
 
     /**
-     * Send a PUT request
+     * Send a PUT request.
      *
      * @param string $url
-     * @param array $body
+     * @param array  $body
      * @param string $contentType
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return Response
      */
     public function put(string $url, array $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
@@ -254,12 +284,13 @@ class Client
     }
 
     /**
-     * Send a PATCH request
+     * Send a PATCH request.
      *
      * @param string $url
-     * @param array $body
+     * @param array  $body
      * @param string $contentType
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return Response
      */
     public function patch(string $url, array $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
@@ -280,10 +311,11 @@ class Client
     }
 
     /**
-     * Send a DELETE request
+     * Send a DELETE request.
      *
      * @param string $url
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return Response
      */
     public function delete(string $url, array $parameters = []): Response
@@ -303,7 +335,7 @@ class Client
     }
 
     /**
-     * Destroy the CURL object
+     * Destroy the CURL object.
      *
      * @since 1.0.0
      */

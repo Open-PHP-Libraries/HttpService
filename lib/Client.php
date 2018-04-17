@@ -20,7 +20,7 @@ class Client
     /**
      * @var CURL $curl
      */
-    private $curl;
+    public $curl;
 
     /**
      * Creates a new instance of the client class
@@ -94,7 +94,7 @@ class Client
      */
     public function setAuthorization(string $type, string $key): Client
     {
-        $this->curl->headers['Authorization'] = ($type == AuthorizationType::None ? '' : $type . ' ') . "{$key}";
+        $this->curl->headers['Authorization'] = ($type == AuthorizationType::NONE ? '' : $type . ' ') . "{$key}";
         return $this;
     }
 

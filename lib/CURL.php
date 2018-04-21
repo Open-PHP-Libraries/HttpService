@@ -211,6 +211,15 @@ class CURL
      */
     public function execute()
     {
+        /* Set headers again in case there are new headers */
+        $headers = [];
+
+        foreach ($this->headers as $key => $value) {
+            $headers[] = "{$key}: {$value}";
+        }
+
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, $headers);
+
         $this->responseHeaders = [];
         return curl_exec($this->curl);
     }

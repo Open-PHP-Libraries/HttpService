@@ -163,7 +163,7 @@ class CURL
      * @return CURL
      * @since  1.0.0
      */
-    public function setPostData(string $contentType, array $data): CURL
+    public function setPostData(string $contentType, $data): CURL
     {
         $encoder = new Encoder($data);
 

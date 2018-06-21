@@ -1,7 +1,7 @@
 {
   "name": "open-php-libraries/http-service",
   "description": "",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://github.com/Open-PHP-Libraries/HttpService",
   "license": "MIT",
   "keywords": [
@@ -23,5 +23,8 @@
       "OpenPHPLibraries\\Http\\Decoder\\": "lib/Decoders",
       "OpenPHPLibraries\\Http\\Types\\": "lib/Types"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "7"
   }
 }

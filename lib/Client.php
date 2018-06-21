@@ -210,7 +210,7 @@ class Client
      * @param array $parameters
      * @return Response
      */
-    public function post(string $url, array $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
+    public function post(string $url, $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
     {
         $this->curl->reset()->initiate()->setUrl($url, $parameters)->setRequestMethod(RequestMethod::POST);
         $this->curl->setPostData($contentType, $body);
@@ -236,7 +236,7 @@ class Client
      * @param array $parameters
      * @return Response
      */
-    public function put(string $url, array $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
+    public function put(string $url, $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
     {
         $this->curl->reset()->initiate()->setUrl($url, $parameters)->setRequestMethod(RequestMethod::PUT);
         $this->curl->setPostData($contentType, $body);
@@ -262,7 +262,7 @@ class Client
      * @param array $parameters
      * @return Response
      */
-    public function patch(string $url, array $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
+    public function patch(string $url, $body = [], string $contentType = ContentType::FORM_ENCODED, array $parameters = []): Response
     {
         $this->curl->reset()->initiate()->setUrl($url, $parameters)->setRequestMethod(RequestMethod::PATCH);
         $this->curl->setPostData($contentType, $body);

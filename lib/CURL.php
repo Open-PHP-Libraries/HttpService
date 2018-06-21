@@ -53,11 +53,12 @@ class CURL
      */
     public function initiate(): CURL
     {
-        if ($this->curl === null) {
+        if ($this->curl === null)
             $this->curl = curl_init();
-            curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, __NAMESPACE__ . "\CURL::handleHeaders");
-        }
+
+        /* Set return transfer and handle header function */
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, __NAMESPACE__ . "\CURL::handleHeaders");
 
         /* Set SSL verify */
         curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, $this->verifySSL ? 0 : 2);
